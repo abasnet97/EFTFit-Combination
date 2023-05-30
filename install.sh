@@ -11,23 +11,23 @@ echo "Installing combine"
 git clone git@github.com:cms-analysis/HiggsAnalysis-CombinedLimit.git HiggsAnalysis/CombinedLimit
 cd HiggsAnalysis/CombinedLimit/
 git checkout v8.2.0
-scram b -j8
 cd -
+scram b -j8
 
-echo "Installing the TopEFT fork of CombineHarvester"
+echo "Installing the EFTFit-Combination"
 cd $CMSSW_BASE/src/
-git clone https://github.com/TopEFT/EFTFit.git EFTFit
+git clone git@github.com:abasnet97/EFTFit-Combination.git
 scram b -j8
 cd -
 
-echo "Installing the  EFTFit"
+echo "Installing the  CombineHarvester"
 cd $CMSSW_BASE/src/
 ## Old commands for custom fork
 #git clone git@github.com:TopEFT/CombineHarvester.git --branch crab_random
 git clone git@github.com:cms-analysis/CombineHarvester.git
 cd - # This one is just so we can use `cd -` again later
 cd $CMSSW_BASE/src/CombineHarvester/CombineTools/python/combine/
-cp $CMSSW_BASE/src/EFTFit/Fitter/test/crab_random.patch .
+cp $CMSSW_BASE/src/EFTFit-Combination/Fitter/test/crab_random.patch .
 # Apply patch to CombineToolBase.py
 git apply crab_random.patch
 scram b -j8
