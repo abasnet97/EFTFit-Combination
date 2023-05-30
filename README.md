@@ -55,7 +55,7 @@ Now we can actually run combine to perform the fits.
 #### Running the fits
 - Make sure you have done a `cmsenv` inside of `CMSSW_10_2_13/src/` (wherever you have it installed)
 - Enter `CMSSW_10_2_13/src/EFTFit/Fitter/test`
-- Copy all the relevant .txt and .root files for the two analyses. Make sure to copy selectedWCs.txt and EFTParam_v8.npy files as well. As a temporary workaround to make it easy to fetch these pertinent files, following commands can be executed: 
+- Copy all the relevant .txt and .root files for the two analyses. Make sure to copy `selectedWCs.txt` and `EFTParam_v8.npy` files as well. As a temporary workaround to make it easy to fetch these pertinent files, following commands can be executed: 
   ```
   xrdcp root://eosuser.cern.ch//eos/user/a/abasnet/EFT/combination_top21003_top22006/EFTParam_v8.npy . 
   xrdcp root://eosuser.cern.ch//eos/user/a/abasnet/EFT/combination_top21003_top22006/top22006_top21003_noSys_datacards .
@@ -69,7 +69,7 @@ Now we can actually run combine to perform the fits.
 - NOTE: combine uses a lot of recursive function calls to create the workspace. When running with systematics, this can cause a segmentation fault. You must run `ulimit -s unlimited` once per session to avoid this.
 - Run the following command to generate the workspace file:
     ```
-    text2workspace.py top21003_top22006_combinedcard.txt -o wps.root -P EFTFit-Combination.Fitter.AlternatePhysModel:alternatePhysicsModel --PO selectedWCs=top22006_top21003_noSys_datacards/selectedWCs.txt --PO fits=EFTParam_v8.npy --for-fits --no-wrappers --X-pack-asympows --optimize-simpdf-constraints=cms
+    text2workspace.py top22006_top21003_noSys_datacards/top21003_top22006_combinedcard.txt -o wps.root -P EFTFit-Combination.Fitter.AlternatePhysicsModel:alternatePhysicsModel --PO selectedWCs=top22006_top21003_noSys_datacards/selectedWCs.txt --PO fits=EFTParam_v8.npy --for-fits --no-wrappers --X-pack-asympows --optimize-simpdf-constraints=cms
     ``` 
 - Run combine with our EFTFit tools
   - Example:
