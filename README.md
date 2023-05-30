@@ -55,18 +55,16 @@ Now we can actually run combine to perform the fits.
 #### Running the fits
 - Make sure you have done a `cmsenv` inside of `CMSSW_10_2_13/src/` (wherever you have it installed)
 - Enter `CMSSW_10_2_13/src/EFTFit/Fitter/test`
-- Copy all the relevant .txt and .root files for the two analyses.
+- Copy all the relevant .txt and .root files for the two analyses. Make sure to copy selectedWCs.txt and EFTParam_v8.npy files as well.
 - Run `combineCards.py` to merge them all into one txt file.
+  ```
   combineCards.py top21003=datacard_recoeft_run2_noSys.txt top22006=combinedcards.txt > top21003_top22006_combinedcard.txt
+  ```
 - NOTE: combine uses a lot of recursive function calls to create the workspace. When running with systematics, this can cause a segmentation fault. You must run `ulimit -s unlimited` once per session to avoid this.
 - Run the following command to generate the workspace file:
     ```
-    text2workspace.py top21003_top22006_combinedcard.txt -o wps.root -P EFTFit-Combination.Fitter.:analiticAnomalousCouplingEFTNegative --X-allow-no-background --for-fits --no-wrappers --X-pack-asympows --optimize-simpdf-constraints=cms
+    text2workspace.py top21003_top22006_combinedcard.txt -o wps.root -P EFTFit-Combination.Fitter.AlternatePhysModel:alternatePhysicsModel --PO selectedWCs=top22006_top21003_datacards/selectedWCs.txt --PO fits=EFTParam_v8.npy --for-fits --no-wrappers --X-pack-asympows --optimize-simpdf-constraints=cms
     ``` 
-    You can Specify a subset of WCs using `--PO`, e.g.:
-    ```
-    text2workspace.py combinedcard.txt -o wps.root -P EFTFit.Fitter.AnomalousCouplingEFTNegative:analiticAnomalousCouplingEFTNegative --X-allow-no-background --PO cpt,ctp,cptb,cQlMi,cQl3i,ctlTi,ctli,cbW,cpQM,cpQ3,ctei,cQei,ctW,ctlSi,ctZ,ctG
-    ```
 - Run combine with our EFTFit tools
   - Example:
     ```
