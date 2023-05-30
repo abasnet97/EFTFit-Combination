@@ -1,4 +1,4 @@
-echo "Setting up your local area to run the TopEFT EFTFit module"
+echo "Setting up your local area to run the EFTFit-Combination module"
 
 echo "Installing CMSSW"
 export SCRAM_ARCH=slc7_amd64_gcc700
@@ -25,13 +25,14 @@ cd $CMSSW_BASE/src/
 ## Old commands for custom fork
 #git clone git@github.com:TopEFT/CombineHarvester.git --branch crab_random
 git clone git@github.com:cms-analysis/CombineHarvester.git
-cd - # This one is just so we can use `cd -` again later
+git checkout 128e41eb
+#cd - # This one is just so we can use `cd -` again later
 cd $CMSSW_BASE/src/CombineHarvester/CombineTools/python/combine/
 cp $CMSSW_BASE/src/EFTFit-Combination/Fitter/test/crab_random.patch .
 # Apply patch to CombineToolBase.py
 git apply crab_random.patch
-scram b -j8
 cd -
+scram b -j8
 
 
 echo "All done! Please see the READMEs for more details on how to run EFTFit"
